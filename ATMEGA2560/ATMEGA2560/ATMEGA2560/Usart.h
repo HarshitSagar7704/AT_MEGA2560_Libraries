@@ -78,15 +78,16 @@ typedef struct
 	volatile uint32_t Fosc;
 	volatile uint8_t buffer[256];
 	volatile uint16_t bufferIndex;
+	char rdata;
 	
 }UsartDev_t;
 UsartDev_t Usart0;
 UsartDev_t Usart1;
 UsartDev_t Usart2;
 UsartDev_t Usart3;
+
 void Usar0tInit(void);
-void usart0_sendint(uint8_t data);
+void usart0_sendchar(unsigned char data);
 void usart0_sendint16(uint16_t data);
 void usart0_sendstr(char *data);
-uint8_t usart0_get(void);
 #endif /* USART_H_ */

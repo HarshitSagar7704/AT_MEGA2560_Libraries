@@ -17,7 +17,7 @@ void Usar0tInit(void)
 	{
 		
 		Usart0.ubrr = (uint16_t)((Usart0.Fosc/Usart0.baudrate/16)-1); 
-		UCSR0B = 0x18;// Enable Tx and Rx.
+		UCSR0B |= (0x98);// Enable Tx and Rx.
 		UCSR0C |= (uint8_t)(((Usart0.characterSize) & 0x03)<<1);// setting Frame format.
 		UCSR0B |= (uint8_t)((Usart0.characterSize)&0x04);// setting Frame format.
 		UCSR0C |= (uint8_t)((Usart0.stopBitSelect)<<3);// setting number of stop bits.
@@ -34,26 +34,26 @@ void Usar0tInit(void)
 	}	
 	UBRR0H = (unsigned int)Usart0.ubrr>>8;
 	UBRR0L =(unsigned int)Usart0.ubrr;
+	sei();
 }
-void usart0_sendint(unsigned char data)
+void usart0_sendchar(unsigned char data)
 {
-    while ((UCSR0A & (1 << UDRE0)) == 0);
-    UDR0 = data; 
-    while ((UCSR0A & (1 << UDRE0)) == 0);
-    UDR0 = '\n';
+	UDR0 = data; 
+    while ((UCSR0A & (1 << TXC0)) == 0);  
+	UDR0 = '\n';
+	while ((UCSR0A & (1 << TXC0)) == 0);
 }
 void usart0_sendint16(uint16_t data) 
 {    
+	UDR0 = data;
     while ((UCSR0A & (1 << UDRE0)) == 0);
-    UDR0 = data;
+	UDR0 = (data >> 8); 
     while ((UCSR0A & (1 << UDRE0)) == 0);
-    UDR0 = (data >> 8); 
+	UDR0 = '\n';
     while ((UCSR0A & (1 << UDRE0)) == 0);
-    UDR0 = '\n';
 }  
 void usart0_sendstr(char *data)
 {
-    
     while (*data) {
         while ((UCSR0A & (1 << UDRE0)) == 0);
         UDR0 = *data; 
@@ -62,17 +62,8 @@ void usart0_sendstr(char *data)
     while ((UCSR0A & (1 << UDRE0)) == 0);
     UDR0 = '\n';
 }
-uint8_t usart0_get(void) {
-	cli();
-	read_spot=0;
-    UCSR0B |= (1<<RXCIE0);
-    uint8_t b;
-    if(read_spot == 0)
-        b = input_buffer[sizeof(input_buffer) - 1];
-    else
-        b = input_buffer[read_spot  - 1];
-    if(b == '\r')
-        b = '\n';
-    return b;
-	sei();
+
+ISR(USART0_RX_vect)
+{
+	Usart0.rdata = UDR0;
 }

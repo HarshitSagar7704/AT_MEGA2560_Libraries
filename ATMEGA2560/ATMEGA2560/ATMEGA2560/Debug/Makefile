@@ -37,6 +37,7 @@ SUBDIRS :=
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
+../I2C.c \
 ../Input_Output.c \
 ../Interrupt.c \
 ../main.c \
@@ -51,6 +52,7 @@ ASM_SRCS +=
 
 
 OBJS +=  \
+I2C.o \
 Input_Output.o \
 Interrupt.o \
 main.o \
@@ -58,6 +60,7 @@ Spi.o \
 Usart.o
 
 OBJS_AS_ARGS +=  \
+I2C.o \
 Input_Output.o \
 Interrupt.o \
 main.o \
@@ -65,6 +68,7 @@ Spi.o \
 Usart.o
 
 C_DEPS +=  \
+I2C.d \
 Input_Output.d \
 Interrupt.d \
 main.d \
@@ -72,6 +76,7 @@ Spi.d \
 Usart.d
 
 C_DEPS_AS_ARGS +=  \
+I2C.d \
 Input_Output.d \
 Interrupt.d \
 main.d \
@@ -92,6 +97,13 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+./I2C.o: .././I2C.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.6.364\include"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega2560 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.6.364\gcc\dev\atmega2560" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
 ./Input_Output.o: .././Input_Output.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
