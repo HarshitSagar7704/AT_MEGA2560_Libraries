@@ -12,5 +12,7 @@ main.c
 
 Spi.c
 
+Timer.c
+
 Usart.c
 
