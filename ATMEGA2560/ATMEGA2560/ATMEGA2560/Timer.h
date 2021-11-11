@@ -1,5 +1,5 @@
-#ifndef SPI_H_
-#define SPI_H_
+#ifndef TIMER_H_
+#define TIMER_H_
 #include <stdlib.h>
 #include <avr/interrupt.h>
 #include <stdbool.h>
@@ -8,15 +8,19 @@
 
 typedef enum compareOutputMode
 {
-	MODE0 = 0x00,
-	MODE1 = 0x01,
-	MODE2 = 0x02,
-	MODE3 = 0x03
+	COMODE0_A = 0x00,
+	COMODE1_A = 0x01,
+	COMODE2_A = 0x02,
+	COMODE3_A = 0x03,
+	COMODE0_B = 0x00,
+	COMODE1_B = 0x01,
+	COMODE2_B = 0x02,
+	COMODE3_B = 0x03
 }compareOutputMode_t;
 typedef enum timerN
 {
-	timer0= 1,
-	timer1 = 2,
+	timer0= 0,
+	timer1 = 1,
 	timer2 = 3,
 	timer3= 4,
 	timer4= 5,
@@ -43,18 +47,18 @@ typedef enum clockSelectBit
 	ExClkOnFalling = 0x06,
 	ExClkOnRising = 0x07
 }clockSelectBit_t; 
+typedef enum state
+{
+	Disable = 0x00,
+	Enable = 0x01
+}state_t;
 typedef struct
 {
 	compareOutputMode_t CompareOutputMode;
 	waveformGenerationMode_t WaveformGenerationMode;
 	clockSelectBit_t ClockSelectBit;
-	timerN_t TimerN;
 }timer_t;
-// timer_t T0;
-// timer_t T1;
-// timer_t T2;
-// timer_t T3;
-// timer_t T4;
-// timer_t T5;
-void Timer0_init(uint8_t timerNo, compareOM,uint8_t waveformGM,uint8_t clockSB);
-#endif /* SPI_H_ */
+
+void Timer_init(uint8_t timerNo,uint8_t clockSB,uint8_t waveformGM,uint8_t compareOM);
+void Timer_InterruptEnableMask(uint8_t timerNo,uint8_t OCIE_A,uint8_t OCIE_B,uint8_t TOCIE);
+#endif /* TIMER_H_ */

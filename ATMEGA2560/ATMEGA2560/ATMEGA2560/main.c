@@ -1,32 +1,41 @@
 #define F_CPU 16000000
 
 #include <avr/io.h>
-#include <avr/delay.h>
+#include <util/delay.h>
 #include <avr/interrupt.h>
 #include <math.h>
+#include "Timer.h"
 void delay(int t);
+
 uint8_t a = 11/7;
 uint8_t b;
 
 int main()
 {
+	
 	sei();
 	uint8_t brightness = 0;
 	DDRB |= (1<<5);
-	TCCR1A |= (1<<WGM10)| (1<<WGM11)| (1<<COM1A1);
-	TCCR1B |= (1<<CS10);
+// 	TCCR1A |= (1<<WGM10)| (1<<WGM11)| (1<<COM1A1);
+// 	TCCR1B |= (1<<CS10);
+	Timer_init(timer1,noPrescale,FastPWM_TM,COMODE2_A);
+	Timer_InterruptEnableMask(timer1,Disable,Disable,Disable);
 	while(1)
 	{	
-		b = sin(11/7);
-		if(b==0)
-		{
+		
+// 		if(b==0)
+// 		{
 
-		for(brightness=255;brightness>0;brightness--)
-		{
-			OCR1A = brightness;
-			_delay_ms(10); 
-		}
-		brightness = 255;
+// 		for(brightness=255;brightness>0;brightness--)
+// 		{
+// 			OCR1A = brightness;
+// 			_delay_ms(10); 
+// 		}
+// 		OCR1A = 0;
+		/*_delay_ms(1000);*/
+		OCR1A = 0;
+		_delay_ms(10);
+// 		_delay_ms(1000);
 			
 		}		
 // 		for(brightness=255;brightness>0;brightness--)
@@ -34,7 +43,7 @@ int main()
 // 			OCR1A = brightness;
 // 			_delay_ms(10);
 // 		}
-	}
+	/*}*/
 }
 // ISR(TIMER1_COMPA_vect)
 // {
