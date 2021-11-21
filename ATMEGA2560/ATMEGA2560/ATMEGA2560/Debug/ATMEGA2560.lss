@@ -3,31 +3,31 @@ ATMEGA2560.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000000  00800200  00800200  00000264  2**0
+  0 .data         00000000  00800200  00800200  0000025c  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         000001f0  00000000  00000000  00000074  2**1
+  1 .text         000001e8  00000000  00000000  00000074  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .bss          00000448  00800200  00800200  00000264  2**0
+  2 .bss          00000448  00800200  00800200  0000025c  2**0
                   ALLOC
-  3 .comment      00000030  00000000  00000000  00000264  2**0
+  3 .comment      00000030  00000000  00000000  0000025c  2**0
                   CONTENTS, READONLY
-  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00000294  2**2
+  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  0000028c  2**2
                   CONTENTS, READONLY
-  5 .debug_aranges 00000088  00000000  00000000  000002d4  2**0
+  5 .debug_aranges 00000088  00000000  00000000  000002cc  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   00001347  00000000  00000000  0000035c  2**0
+  6 .debug_info   000012c1  00000000  00000000  00000354  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 00000db7  00000000  00000000  000016a3  2**0
+  7 .debug_abbrev 00000d46  00000000  00000000  00001615  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   00000637  00000000  00000000  0000245a  2**0
+  8 .debug_line   000005c4  00000000  00000000  0000235b  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  000000d8  00000000  00000000  00002a94  2**2
+  9 .debug_frame  000000d8  00000000  00000000  00002920  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    00000a3e  00000000  00000000  00002b6c  2**0
+ 10 .debug_str    000009fc  00000000  00000000  000029f8  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    00000252  00000000  00000000  000035aa  2**0
+ 11 .debug_loc    00000252  00000000  00000000  000033f4  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000058  00000000  00000000  000037fc  2**0
+ 12 .debug_ranges 00000058  00000000  00000000  00003646  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -83,7 +83,7 @@ Disassembly of section .text:
   5e:	00 00       	nop
   60:	60 c0       	rjmp	.+192    	; 0x122 <__bad_interrupt>
   62:	00 00       	nop
-  64:	b3 c0       	rjmp	.+358    	; 0x1cc <__vector_25>
+  64:	af c0       	rjmp	.+350    	; 0x1c4 <__vector_25>
   66:	00 00       	nop
   68:	5c c0       	rjmp	.+184    	; 0x122 <__bad_interrupt>
   6a:	00 00       	nop
@@ -162,7 +162,7 @@ Disassembly of section .text:
   f4:	12 e0       	ldi	r17, 0x02	; 2
   f6:	a0 e0       	ldi	r26, 0x00	; 0
   f8:	b2 e0       	ldi	r27, 0x02	; 2
-  fa:	e0 ef       	ldi	r30, 0xF0	; 240
+  fa:	e8 ee       	ldi	r30, 0xE8	; 232
   fc:	f1 e0       	ldi	r31, 0x01	; 1
   fe:	00 e0       	ldi	r16, 0x00	; 0
  100:	0b bf       	out	0x3b, r16	; 59
@@ -187,17 +187,17 @@ Disassembly of section .text:
  11a:	b2 07       	cpc	r27, r18
  11c:	e1 f7       	brne	.-8      	; 0x116 <.do_clear_bss_loop>
  11e:	02 d0       	rcall	.+4      	; 0x124 <main>
- 120:	65 c0       	rjmp	.+202    	; 0x1ec <_exit>
+ 120:	61 c0       	rjmp	.+194    	; 0x1e4 <_exit>
 
 00000122 <__bad_interrupt>:
  122:	6e cf       	rjmp	.-292    	; 0x0 <__vectors>
 
 00000124 <main>:
+void delay(int t);
+uint8_t a = 11/7;
 uint8_t b;
-
 int main()
 {
-	
 	sei();
  124:	78 94       	sei
 	uint8_t brightness = 0;
@@ -212,141 +212,131 @@ int main()
  12e:	43 e0       	ldi	r20, 0x03	; 3
  130:	61 e0       	ldi	r22, 0x01	; 1
  132:	81 e0       	ldi	r24, 0x01	; 1
- 134:	10 d0       	rcall	.+32     	; 0x156 <Timer_init>
+ 134:	0c d0       	rcall	.+24     	; 0x14e <Timer_init>
 	Timer_InterruptEnableMask(timer1,Disable,Disable,Disable);
  136:	20 e0       	ldi	r18, 0x00	; 0
  138:	40 e0       	ldi	r20, 0x00	; 0
  13a:	60 e0       	ldi	r22, 0x00	; 0
  13c:	81 e0       	ldi	r24, 0x01	; 1
- 13e:	30 d0       	rcall	.+96     	; 0x1a0 <Timer_InterruptEnableMask>
-// 			OCR1A = brightness;
+ 13e:	2c d0       	rcall	.+88     	; 0x198 <Timer_InterruptEnableMask>
 // 			_delay_ms(10); 
+// 		/*	brightness--;*/
 // 		}
 // 		OCR1A = 0;
 		/*_delay_ms(1000);*/
-		OCR1A = 0;
- 140:	10 92 89 00 	sts	0x0089, r1	; 0x800089 <__TEXT_REGION_LENGTH__+0x7c0089>
- 144:	10 92 88 00 	sts	0x0088, r1	; 0x800088 <__TEXT_REGION_LENGTH__+0x7c0088>
-	#else
-		//round up by default
-		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
-	#endif
+		OCR1A = 1;
+ 140:	81 e0       	ldi	r24, 0x01	; 1
+ 142:	90 e0       	ldi	r25, 0x00	; 0
+ 144:	90 93 89 00 	sts	0x0089, r25	; 0x800089 <__TEXT_REGION_LENGTH__+0x7c0089>
+ 148:	80 93 88 00 	sts	0x0088, r24	; 0x800088 <__TEXT_REGION_LENGTH__+0x7c0088>
+ 14c:	f9 cf       	rjmp	.-14     	; 0x140 <main+0x1c>
 
-	__builtin_avr_delay_cycles(__ticks_dc);
- 148:	8f e3       	ldi	r24, 0x3F	; 63
- 14a:	9c e9       	ldi	r25, 0x9C	; 156
- 14c:	01 97       	sbiw	r24, 0x01	; 1
- 14e:	f1 f7       	brne	.-4      	; 0x14c <main+0x28>
- 150:	00 c0       	rjmp	.+0      	; 0x152 <main+0x2e>
- 152:	00 00       	nop
- 154:	f5 cf       	rjmp	.-22     	; 0x140 <main+0x1c>
-
-00000156 <Timer_init>:
+0000014e <Timer_init>:
 #include "Timer.h"
 void Timer_init(uint8_t timerNo,uint8_t clockSB,uint8_t waveformGM,uint8_t compareOM)
 {
 	switch(timerNo)
- 156:	88 23       	and	r24, r24
- 158:	19 f0       	breq	.+6      	; 0x160 <Timer_init+0xa>
- 15a:	81 30       	cpi	r24, 0x01	; 1
- 15c:	79 f0       	breq	.+30     	; 0x17c <Timer_init+0x26>
- 15e:	08 95       	ret
+ 14e:	88 23       	and	r24, r24
+ 150:	19 f0       	breq	.+6      	; 0x158 <Timer_init+0xa>
+ 152:	81 30       	cpi	r24, 0x01	; 1
+ 154:	79 f0       	breq	.+30     	; 0x174 <Timer_init+0x26>
+ 156:	08 95       	ret
 	{
 		case 0:
 		TCCR0B |= (uint8_t)clockSB;
- 160:	85 b5       	in	r24, 0x25	; 37
- 162:	68 2b       	or	r22, r24
- 164:	65 bd       	out	0x25, r22	; 37
+ 158:	85 b5       	in	r24, 0x25	; 37
+ 15a:	68 2b       	or	r22, r24
+ 15c:	65 bd       	out	0x25, r22	; 37
 		TCCR0A |= (uint8_t)waveformGM;
- 166:	84 b5       	in	r24, 0x24	; 36
- 168:	48 2b       	or	r20, r24
- 16a:	44 bd       	out	0x24, r20	; 36
+ 15e:	84 b5       	in	r24, 0x24	; 36
+ 160:	48 2b       	or	r20, r24
+ 162:	44 bd       	out	0x24, r20	; 36
 		TCCR0A |= (((uint8_t)compareOM)<<6);
- 16c:	84 b5       	in	r24, 0x24	; 36
- 16e:	90 e4       	ldi	r25, 0x40	; 64
- 170:	29 9f       	mul	r18, r25
- 172:	90 01       	movw	r18, r0
- 174:	11 24       	eor	r1, r1
- 176:	28 2b       	or	r18, r24
- 178:	24 bd       	out	0x24, r18	; 36
+ 164:	84 b5       	in	r24, 0x24	; 36
+ 166:	90 e4       	ldi	r25, 0x40	; 64
+ 168:	29 9f       	mul	r18, r25
+ 16a:	90 01       	movw	r18, r0
+ 16c:	11 24       	eor	r1, r1
+ 16e:	28 2b       	or	r18, r24
+ 170:	24 bd       	out	0x24, r18	; 36
 		break;
- 17a:	08 95       	ret
+ 172:	08 95       	ret
 		case 1:
 		TCCR1B |= (uint8_t)clockSB;
- 17c:	e1 e8       	ldi	r30, 0x81	; 129
- 17e:	f0 e0       	ldi	r31, 0x00	; 0
- 180:	80 81       	ld	r24, Z
- 182:	68 2b       	or	r22, r24
- 184:	60 83       	st	Z, r22
+ 174:	e1 e8       	ldi	r30, 0x81	; 129
+ 176:	f0 e0       	ldi	r31, 0x00	; 0
+ 178:	80 81       	ld	r24, Z
+ 17a:	68 2b       	or	r22, r24
+ 17c:	60 83       	st	Z, r22
 		TCCR1A |= (uint8_t)waveformGM;
- 186:	e0 e8       	ldi	r30, 0x80	; 128
- 188:	f0 e0       	ldi	r31, 0x00	; 0
- 18a:	80 81       	ld	r24, Z
- 18c:	48 2b       	or	r20, r24
- 18e:	40 83       	st	Z, r20
+ 17e:	e0 e8       	ldi	r30, 0x80	; 128
+ 180:	f0 e0       	ldi	r31, 0x00	; 0
+ 182:	80 81       	ld	r24, Z
+ 184:	48 2b       	or	r20, r24
+ 186:	40 83       	st	Z, r20
 		TCCR1A |= (((uint8_t)compareOM)<<6);		
- 190:	80 81       	ld	r24, Z
- 192:	90 e4       	ldi	r25, 0x40	; 64
- 194:	29 9f       	mul	r18, r25
- 196:	90 01       	movw	r18, r0
- 198:	11 24       	eor	r1, r1
- 19a:	28 2b       	or	r18, r24
- 19c:	20 83       	st	Z, r18
- 19e:	08 95       	ret
+ 188:	80 81       	ld	r24, Z
+ 18a:	90 e4       	ldi	r25, 0x40	; 64
+ 18c:	29 9f       	mul	r18, r25
+ 18e:	90 01       	movw	r18, r0
+ 190:	11 24       	eor	r1, r1
+ 192:	28 2b       	or	r18, r24
+ 194:	20 83       	st	Z, r18
+ 196:	08 95       	ret
 
-000001a0 <Timer_InterruptEnableMask>:
+00000198 <Timer_InterruptEnableMask>:
 		break;
 	}
 }
 void Timer_InterruptEnableMask(uint8_t timerNo,uint8_t OCIE_A,uint8_t OCIE_B,uint8_t TOCIE)
 {
 	switch(timerNo)
- 1a0:	81 11       	cpse	r24, r1
- 1a2:	13 c0       	rjmp	.+38     	; 0x1ca <Timer_InterruptEnableMask+0x2a>
+ 198:	81 11       	cpse	r24, r1
+ 19a:	13 c0       	rjmp	.+38     	; 0x1c2 <Timer_InterruptEnableMask+0x2a>
 	{
 		case 0:
 		TIMSK0 |= ((uint8_t)OCIE_A<<1);
- 1a4:	ee e6       	ldi	r30, 0x6E	; 110
- 1a6:	f0 e0       	ldi	r31, 0x00	; 0
- 1a8:	80 81       	ld	r24, Z
- 1aa:	70 e0       	ldi	r23, 0x00	; 0
- 1ac:	66 0f       	add	r22, r22
- 1ae:	77 1f       	adc	r23, r23
- 1b0:	68 2b       	or	r22, r24
- 1b2:	60 83       	st	Z, r22
+ 19c:	ee e6       	ldi	r30, 0x6E	; 110
+ 19e:	f0 e0       	ldi	r31, 0x00	; 0
+ 1a0:	80 81       	ld	r24, Z
+ 1a2:	70 e0       	ldi	r23, 0x00	; 0
+ 1a4:	66 0f       	add	r22, r22
+ 1a6:	77 1f       	adc	r23, r23
+ 1a8:	68 2b       	or	r22, r24
+ 1aa:	60 83       	st	Z, r22
 		TIMSK0 |= ((uint8_t)OCIE_B<<2);
- 1b4:	80 81       	ld	r24, Z
- 1b6:	50 e0       	ldi	r21, 0x00	; 0
- 1b8:	44 0f       	add	r20, r20
- 1ba:	55 1f       	adc	r21, r21
- 1bc:	44 0f       	add	r20, r20
- 1be:	55 1f       	adc	r21, r21
- 1c0:	48 2b       	or	r20, r24
- 1c2:	40 83       	st	Z, r20
+ 1ac:	80 81       	ld	r24, Z
+ 1ae:	50 e0       	ldi	r21, 0x00	; 0
+ 1b0:	44 0f       	add	r20, r20
+ 1b2:	55 1f       	adc	r21, r21
+ 1b4:	44 0f       	add	r20, r20
+ 1b6:	55 1f       	adc	r21, r21
+ 1b8:	48 2b       	or	r20, r24
+ 1ba:	40 83       	st	Z, r20
 		TIMSK0 |= (uint8_t)TOCIE;
- 1c4:	80 81       	ld	r24, Z
- 1c6:	28 2b       	or	r18, r24
- 1c8:	20 83       	st	Z, r18
- 1ca:	08 95       	ret
+ 1bc:	80 81       	ld	r24, Z
+ 1be:	28 2b       	or	r18, r24
+ 1c0:	20 83       	st	Z, r18
+ 1c2:	08 95       	ret
 
-000001cc <__vector_25>:
- 1cc:	1f 92       	push	r1
- 1ce:	0f 92       	push	r0
- 1d0:	0f b6       	in	r0, 0x3f	; 63
- 1d2:	0f 92       	push	r0
- 1d4:	11 24       	eor	r1, r1
- 1d6:	8f 93       	push	r24
- 1d8:	80 91 c6 00 	lds	r24, 0x00C6	; 0x8000c6 <__TEXT_REGION_LENGTH__+0x7c00c6>
- 1dc:	80 93 47 06 	sts	0x0647, r24	; 0x800647 <Usart0+0x111>
- 1e0:	8f 91       	pop	r24
- 1e2:	0f 90       	pop	r0
- 1e4:	0f be       	out	0x3f, r0	; 63
- 1e6:	0f 90       	pop	r0
- 1e8:	1f 90       	pop	r1
- 1ea:	18 95       	reti
+000001c4 <__vector_25>:
+ 1c4:	1f 92       	push	r1
+ 1c6:	0f 92       	push	r0
+ 1c8:	0f b6       	in	r0, 0x3f	; 63
+ 1ca:	0f 92       	push	r0
+ 1cc:	11 24       	eor	r1, r1
+ 1ce:	8f 93       	push	r24
+ 1d0:	80 91 c6 00 	lds	r24, 0x00C6	; 0x8000c6 <__TEXT_REGION_LENGTH__+0x7c00c6>
+ 1d4:	80 93 47 06 	sts	0x0647, r24	; 0x800647 <Usart0+0x111>
+ 1d8:	8f 91       	pop	r24
+ 1da:	0f 90       	pop	r0
+ 1dc:	0f be       	out	0x3f, r0	; 63
+ 1de:	0f 90       	pop	r0
+ 1e0:	1f 90       	pop	r1
+ 1e2:	18 95       	reti
 
-000001ec <_exit>:
- 1ec:	f8 94       	cli
+000001e4 <_exit>:
+ 1e4:	f8 94       	cli
 
-000001ee <__stop_program>:
- 1ee:	ff cf       	rjmp	.-2      	; 0x1ee <__stop_program>
+000001e6 <__stop_program>:
+ 1e6:	ff cf       	rjmp	.-2      	; 0x1e6 <__stop_program>
