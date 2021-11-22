@@ -17,18 +17,13 @@ void ADC_Adjust_Result(uint8_t shift)
 }
 void input_Ch_S(uint8_t chnl)
 {
-	/*ADMUX &= (0xE0); */
+	ADMUX &= ~(0xE0); 
 	ADMUX = ADMUX | (uint8_t)((chnl)&0x1F);
-	/*ADCSRB = ADCSRB | (uint8_t)(((chnl)&0x20)>>2);*/
+	ADCSRB = ADCSRB | (uint8_t)(((chnl)&0x20)>>2);
 }
 void ADC_Start_C()
 {
-	ADCSRA |= (1<<ADSC);
-	while(ADCSRA & (1<<ADSC));
-}
-uint16_t ADC_Read(){
-	ADCSRA |=(1<<ADSC); // Start ADC Conversion
-	return ADC;         // Store data in ADC Register(ADC = ADCL + ADCH)
+	ADCSRA |= 0x40;
 }
 void Adc(uint8_t adc_state)
 {

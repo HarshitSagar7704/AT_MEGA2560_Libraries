@@ -84,7 +84,6 @@ void ADC_InF(uint8_t Inf_state);
 void ADC_In(uint8_t In_state);
 void ADC_Prescaler(uint8_t adc_Prescaler);
 void ADC_AutoTrigger_Source(uint8_t ADC_ATS);
-uint16_t ADC_Read();
 /*void Digital_Input_Disable(uint16_t ADC_ID);*/
 
 #endif /* ADC_H_ */
